@@ -26,7 +26,7 @@ screen = pygame.display.set_mode((disp_x, disp_y))
 running = True
 
 
-player = creature_classes.Player() # player initialization
+player = creature_classes.Player(disp_x , disp_y) # player initialization
 
 
 
