@@ -1,7 +1,7 @@
 from numpy import disp
 import pygame
 from pygame.locals import *
-
+import time
 
 
 class Player(pygame.sprite.Sprite):
@@ -38,5 +38,27 @@ class Player(pygame.sprite.Sprite):
       self.surf.fill((255,255,0))
     
 
-    
+class Ghul(pygame.sprite.Sprite):
+  '''
+  Ghull class makes ghul enemies. For now they can appear in several random positions in one line.
+  '''
+  def __init__(self, x, y):
+    super(Ghul, self).__init__() 
+    self.surf = pygame.Surface((50, 50))
+    self.x = x
+    self.y = y
+    self.surf.fill((128, 0, 0))
+    self.rect = self.surf.get_rect(center = (x, y))
+
+
+
+  #def move(self, speed = 10):
+
+
+  #def update(self):
+
+
+
+      
+
 

@@ -2,6 +2,7 @@ import pygame
 import creature_classes
 import activity_classes
 from pygame.locals import *
+import random
 
 
 
@@ -28,18 +29,33 @@ running = True
 
 player = creature_classes.Player(disp_x , disp_y) # player initialization
 
+enemies_list = pygame.sprite.Group()
+all_sprites = pygame.sprite.Group()
+all_sprites.add(player)
 
+
+
+#----- LVL1 ghuls positions ----------------
+ghul_x = [disp_x-100, disp_x/2, disp_x-1000, disp_x-300]
+ghul_y = disp_y/2
+
+ADDENEMY = pygame.USEREVENT + 1  #making event about adding ghul
+pygame.time.set_timer(ADDENEMY, 2000) #each ghul is added after 2s
 
 
 #Main loop
 while running:
-
+  i = 0
   #checking if the user clicked close window
   for event in pygame.event.get():
     if event.type == pygame.KEYDOWN:
       if event.key == K_ESCAPE:
         running = False
-    
+    if event.type == ADDENEMY:  
+        ghul = creature_classes.Ghul(random.choice(ghul_x), ghul_y)
+        enemies_list.add(ghul)
+        all_sprites.add(ghul)
+
     elif event.type == pygame.QUIT:
       running = False
 
@@ -48,7 +64,9 @@ while running:
   
   screen.fill((255,255,255))  #creating white color background
 
-  screen.blit(player.surf, player.rect) #visualisation of player
+
+  for object in all_sprites: # creating everyone (player and ghuls) on the screen 
+    screen.blit(object.surf, object.rect)
 
   pygame.display.flip()
 
