@@ -52,7 +52,8 @@ while running:
       if event.key == K_ESCAPE:
         running = False
     if event.type == ADDENEMY:  
-        ghul = creature_classes.Ghul(random.choice(ghul_x), ghul_y)
+        ghul_speed = random.randrange(-15,15) # set up random speed of ghul "-"" is left, "+" is right 
+        ghul = creature_classes.Ghul(random.choice(ghul_x), ghul_y, ghul_speed, disp_x)
         enemies_list.add(ghul)
         all_sprites.add(ghul)
 
@@ -68,6 +69,7 @@ while running:
   for object in all_sprites: # creating everyone (player and ghuls) on the screen 
     screen.blit(object.surf, object.rect)
 
+  for ghul in enemies_list: # ghuls can move
+    ghul.update()
   pygame.display.flip()
-
 pygame.quit()

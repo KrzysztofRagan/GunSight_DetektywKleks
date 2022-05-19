@@ -1,7 +1,7 @@
 from numpy import disp
 import pygame
 from pygame.locals import *
-import time
+import random
 
 
 class Player(pygame.sprite.Sprite):
@@ -12,9 +12,10 @@ class Player(pygame.sprite.Sprite):
     super(Player, self).__init__()
     self.x = x
     self.y = y
-    self.surf = pygame.Surface((75,50))
-    self.surf.fill((0, 0, 0))
-    self.rect = self.surf.get_rect(center = (x/2, y-50))
+    self.surf = pygame.image.load("images/kleks_middle.png").convert()
+    self.surf = pygame.transform.scale(self.surf, (533, 300))
+    self.rect = self.surf.get_rect(center = (x/2, y-100))
+
 
 
   def update(self, pressed_keys):
@@ -30,32 +31,41 @@ class Player(pygame.sprite.Sprite):
       self.rect.left = 0
 
     #------- PLAYER APPEARANCE CHANGE BEACAUSE OF MOUSE POSITION --------
-    if pygame.mouse.get_pos()[0] < self.rect.centerx - 25:
-      self.surf.fill((0,0,255))
-    if pygame.mouse.get_pos()[0] >= self.rect.centerx - 25 and pygame.mouse.get_pos()[0] <= self.rect.centerx + 25:
+    if pygame.mouse.get_pos()[0] < self.rect.centerx - 150:
+      # self.surf.fill((0,0,255))
+      self.surf = pygame.image.load("images/kleks_middle.png").convert()
+      self.surf = pygame.transform.smoothscale(self.surf, (533,300))
+    if pygame.mouse.get_pos()[0] >= self.rect.centerx - 150 and pygame.mouse.get_pos()[0] <= self.rect.centerx + 150:
       self.surf.fill((0,0,0))
-    if pygame.mouse.get_pos()[0] > self.rect.centerx + 25:
-      self.surf.fill((255,255,0))
+    if pygame.mouse.get_pos()[0] > self.rect.centerx + 150:
+      self.surf = pygame.image.load("images/kleks_right.png").convert()
+      self.surf = pygame.transform.scale(self.surf, (533,300))
     
 
 class Ghul(pygame.sprite.Sprite):
   '''
   Ghull class makes ghul enemies. For now they can appear in several random positions in one line.
   '''
-  def __init__(self, x, y):
+  def __init__(self, x, y, speed, limit):
     super(Ghul, self).__init__() 
     self.surf = pygame.Surface((50, 50))
     self.x = x
     self.y = y
     self.surf.fill((128, 0, 0))
     self.rect = self.surf.get_rect(center = (x, y))
+    self.speed = speed
+    self.limit = limit
 
 
 
-  #def move(self, speed = 10):
+  def update(self):
+    self.rect.move_ip(self.speed, 0)
+    #------ LIMITS IN THE SCREEN EDGES- KILL ENEMIE --------
+    if self.rect.left < 0:
+      self.kill()
+    elif self.rect.right > self.limit:
+      self.kill()
 
-
-  #def update(self):
 
 
 
