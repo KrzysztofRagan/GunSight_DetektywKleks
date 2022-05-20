@@ -52,10 +52,13 @@ while running:
       if event.key == K_ESCAPE:
         running = False
     if event.type == ADDENEMY:  
-        ghul_speed = random.randrange(-15,15) # set up random speed of ghul "-"" is left, "+" is right 
-        ghul = creature_classes.Ghul(random.choice(ghul_x), ghul_y, ghul_speed, disp_x)
-        enemies_list.add(ghul)
-        all_sprites.add(ghul)
+      ghul_speed = random.randrange(-5,5) # set up random speed of ghul "-"" is left, "+" is right 
+      ghul = creature_classes.Ghul(random.choice(ghul_x), ghul_y, ghul_speed, disp_x, 100)
+      enemies_list.add(ghul)
+      all_sprites.add(ghul)  
+    if event.type == MOUSEBUTTONDOWN:  # if mouse clicked check if enemie is hit
+      ghul.hit()
+      
 
     elif event.type == pygame.QUIT:
       running = False
