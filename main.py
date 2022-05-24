@@ -26,12 +26,14 @@ disp_y = int(disp_y)
 screen = pygame.display.set_mode((disp_x, disp_y))
 running = True
 
+crosshair = activity_classes.Crosshair(disp_x, disp_y)
 
 player = creature_classes.Player(disp_x , disp_y) # player initialization
 
 enemies_list = pygame.sprite.Group()
 all_sprites = pygame.sprite.Group()
 all_sprites.add(player)
+all_sprites.add(crosshair)
 
 
 
@@ -45,6 +47,7 @@ pygame.time.set_timer(ADDENEMY, 2000) #each ghul is added after 2s
 
 #Main loop
 while running:
+  clock = pygame.time.Clock()
   i = 0
   #checking if the user clicked close window
   for event in pygame.event.get():
@@ -52,12 +55,14 @@ while running:
       if event.key == K_ESCAPE:
         running = False
     if event.type == ADDENEMY:  
-      ghul_speed = random.randrange(-5,5) # set up random speed of ghul "-"" is left, "+" is right 
+      ghul_speed = random.randrange(-15,15) # set up random speed of ghul "-"" is left, "+" is right 
       ghul = creature_classes.Ghul(random.choice(ghul_x), ghul_y, ghul_speed, disp_x, 100)
       enemies_list.add(ghul)
       all_sprites.add(ghul)  
     if event.type == MOUSEBUTTONDOWN:  # if mouse clicked check if enemie is hit
       ghul.hit()
+    if event.type ==pygame.MOUSEMOTION:
+      crosshair.rect.center = event.pos
       
 
     elif event.type == pygame.QUIT:
@@ -75,4 +80,5 @@ while running:
   for ghul in enemies_list: # ghuls can move
     ghul.update()
   pygame.display.flip()
+  clock.tick(60)
 pygame.quit()

@@ -1,8 +1,12 @@
 import pygame
 from pygame.locals import *
-# class MySprite(Sprite):
 
-
-#   def mouse_click(self):
-#     return pygame.mouse.get_pressed()[0] and self.rect.collidepoint(pygame.mouse.get_pos())
+class Crosshair(pygame.sprite.Sprite):
+  def __init__(self, x, y):
+    super(Crosshair, self).__init__()
+    self.x = x
+    self.y = y
+    self.surf = pygame.image.load("images/celownik.png").convert()
+    self.surf = pygame.transform.scale(self.surf, (30,30))
+    self.rect = self.surf.get_rect()
 
