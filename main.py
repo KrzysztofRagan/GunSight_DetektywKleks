@@ -30,10 +30,14 @@ crosshair = activity_classes.Crosshair(disp_x, disp_y)
 
 player = creature_classes.Player(disp_x , disp_y) # player initialization
 
+pygame.mouse.set_visible(False) # setting mouse invisible
+
+#------------- Sprite group ---------------------
 enemies_list = pygame.sprite.Group()
 all_sprites = pygame.sprite.Group()
 all_sprites.add(player)
-all_sprites.add(crosshair)
+crosshair_group = pygame.sprite.Group()
+crosshair_group.add(crosshair)
 
 
 
@@ -55,7 +59,7 @@ while running:
       if event.key == K_ESCAPE:
         running = False
     if event.type == ADDENEMY:  
-      ghul_speed = random.randrange(-15,15) # set up random speed of ghul "-"" is left, "+" is right 
+      ghul_speed = random.randrange(-10,10) # set up random speed of ghul "-"" is left, "+" is right 
       ghul = creature_classes.Ghul(random.choice(ghul_x), ghul_y, ghul_speed, disp_x, 100)
       enemies_list.add(ghul)
       all_sprites.add(ghul)  
@@ -79,6 +83,8 @@ while running:
 
   for ghul in enemies_list: # ghuls can move
     ghul.update()
+
+  screen.blit(crosshair.surf, crosshair.rect) #drawing crosshair as last elemnt to be always on the top 
   pygame.display.flip()
   clock.tick(60)
 pygame.quit()
